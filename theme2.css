@@ -1,0 +1,163 @@
+/*THEME*/
+
+/*COLOR PALLETE
+		#HEX		#RGB 			DESCRIPTION			LAYER
+	---------------------------------------------------------------
+	-	#4a6a15		74, 106, 21		Med-Olive			backmos
+	-	#2d4309		45, 67, 9		Dark-Olive			mid-layer	
+	- 	#ffffff		255, 255, 255	White 				main-front
+	-	#d5b62a		213, 182, 42	Dim-orange-yellow	highlight	
+
+	FONT EXTRA: 	#f2f2f2
+*/
+
+
+body{
+	background-color: #4a6a15;
+	position: relative;
+	padding: 50px;
+}
+
+input{
+	float: left;
+}
+
+div, li{
+	font-size: 12pt;
+}
+
+#tophead{
+	background-color: #2d4309;
+	padding: 10px 0px;
+	border-radius: 5px;
+	color: #f2f2f2;
+	border: 0px;
+}
+
+#butt{
+	background-color: #2d4309;
+	border-color: #4a6a15;
+}
+
+#lfix{
+	float: left;
+}
+
+#go:hover, #go:focus{
+	background-color: #2d4309;
+	border-color: #4a6a15;
+	color: #f2f2f2;
+}
+
+#go{
+	background-color: #4a6a15;
+	border-color: #f2f2f2;
+	color: #ffffff;
+	font-size: 12pt;
+}
+
+#panelh{
+	padding:5px 20px;
+	font-size:12pt;
+
+}
+
+.p{
+	color: #f2f2f2;
+}
+
+.navbar-default{
+	background-color: #d5b62a;
+	color: #ffffff;
+	border: none;
+	border-radius: 5px;
+}
+
+#banner{
+	padding: 50px;
+	font-size: 16;
+	color: #ffffff;
+}
+
+#free{
+	position: relative;
+}
+
+#outer{
+	background-color: #2d4309;
+	margin: auto;
+	padding: 20px 12px 30px 12px;
+	border-radius: 5px;
+	max-width: 1200px;
+	min-width: 900px;
+	box-shadow:  0px 0px 10px 5px rgba(255, 255, 255, 0.2);
+}
+
+
+#basic{
+	background-color:  #ffffff;
+	padding: 0px;
+	margin: 0px;
+	border-radius: 3px;
+}
+
+#inner{
+	padding: 10px;
+}
+
+#picture{
+	background-color: #4a6a15;
+	width: 100%;
+	max-width: 150px;
+	padding: 0px;
+	border-radius: 5px;
+}
+
+#profile{
+	padding: 20px;
+	align-content: left;
+}
+
+#box{
+	background-color:  rgba(74, 106, 21, 0.3);
+	padding: 12px;
+	margin: 0px 10px 10px 10px;
+	min-height: 150px;
+	border-radius: 5px;
+}
+
+#boxl{
+	background-color: #4a6a15;
+	font-size: 12pt;
+	padding: 3px;
+	width: 100%;
+	text-align: center;
+	min-height:0px;
+	margin: 5px;
+	border-left:
+	solid 8px #d5b62a;
+	border-radius: 5px;
+}
+
+#boxl:hover, #boxl:active, #boxl:focus{
+	background-color: #2d4309;
+}
+
+#link{
+	text-decoration: none;
+	color: #ffffff;
+}
+
+.record{
+	padding: 0px;
+}
+
+.record > .month{
+	text-align: center;
+	background-color: #4a6a15;
+	color: rgba(255, 255, 255, 0.7);
+	padding: 10px;
+	border-radius: 5px;
+}
+
+/*THEME END*/
