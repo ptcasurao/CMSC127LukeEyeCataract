@@ -3,19 +3,27 @@
 /*COLOR PALLETE
 		#HEX		#RGB 			DESCRIPTION			LAYER
 	---------------------------------------------------------------
-	-	#4a6a15		74, 106, 21		Med-Olive			backmos
-	-	#2d4309		45, 67, 9		Dark-Olive			mid-layer	
-	- 	#ffffff		255, 255, 255	White 				main-front
-	-	#d5b62a		213, 182, 42	Dim-orange-yellow	highlight	
+	-	#bfbfbf		191, 191, 191	strong grey			
+	- 	#337ab7						blue
+	- 	#5cb85c						green
+	-	#f0ad4e						yellow
+	-	#d9534f						red
 
 	FONT EXTRA: 	#f2f2f2
+	LUKE:			#163031
 */
 
-
 body{
-	background-color: #4a6a15;
+	background-image: url("/images/bg2.png");
+	background-color: #d9d9d9;
 	position: relative;
 	padding: 50px;
+}
+
+hr{
+	border: solid 1px #f0ad4e;
+	width:100%;
+	padding: 0px;
 }
 
 input{
@@ -27,16 +35,17 @@ div, li{
 }
 
 #tophead{
-	background-color: #2d4309;
+	background-color: #337ab7;
 	padding: 10px 0px;
 	border-radius: 5px;
 	color: #f2f2f2;
 	border: 0px;
 }
 
-#butt{
-	background-color: #2d4309;
-	border-color: #4a6a15;
+#tophead1{
+	background-color: #337ab7;
+	padding: 10px 20px;
+	color: #f2f2f2;
 }
 
 #lfix{
@@ -44,13 +53,13 @@ div, li{
 }
 
 #go:hover, #go:focus{
-	background-color: #2d4309;
-	border-color: #4a6a15;
+	background-color: #5cb85c;
+	border-color: #bfbfbf;
 	color: #f2f2f2;
 }
 
 #go{
-	background-color: #4a6a15;
+	background-color: #337ab7;
 	border-color: #f2f2f2;
 	color: #ffffff;
 	font-size: 12pt;
@@ -59,7 +68,7 @@ div, li{
 #panelh{
 	padding:5px 20px;
 	font-size:12pt;
-
+	color: #337ab7;
 }
 
 .p{
@@ -67,7 +76,7 @@ div, li{
 }
 
 .navbar-default{
-	background-color: #d5b62a;
+	background-color: #337ab7;
 	color: #ffffff;
 	border: none;
 	border-radius: 5px;
@@ -77,6 +86,7 @@ div, li{
 	padding: 50px;
 	font-size: 16;
 	color: #ffffff;
+	border-radius: 5px;
 }
 
 #free{
@@ -84,15 +94,14 @@ div, li{
 }
 
 #outer{
-	background-color: #2d4309;
+	background-color: rgba(92, 184, 92,0.9);
 	margin: auto;
-	padding: 20px 12px 30px 12px;
+	padding: 20px 20px 30px 20px;
 	border-radius: 5px;
 	max-width: 1200px;
 	min-width: 900px;
-	box-shadow:  0px 0px 10px 5px rgba(255, 255, 255, 0.2);
+	box-shadow:  0px 0px 10px 5px rgba(255,255,255, 0.7);
 }
-
 
 #basic{
 	background-color:  #ffffff;
@@ -106,7 +115,7 @@ div, li{
 }
 
 #picture{
-	background-color: #4a6a15;
+	background-color: #bfbfbf;
 	width: 100%;
 	max-width: 150px;
 	padding: 0px;
@@ -127,20 +136,18 @@ div, li{
 }
 
 #boxl{
-	background-color: #4a6a15;
+	background-color: #337ab7;
 	font-size: 12pt;
 	padding: 3px;
 	width: 100%;
 	text-align: center;
 	min-height:0px;
 	margin: 5px;
-	border-left:
-	solid 8px #d5b62a;
 	border-radius: 5px;
 }
 
 #boxl:hover, #boxl:active, #boxl:focus{
-	background-color: #2d4309;
+	background-color: #5cb85c;
 }
 
 #link{
@@ -154,10 +161,19 @@ div, li{
 
 .record > .month{
 	text-align: center;
-	background-color: #4a6a15;
+	background-color: #bfbfbf;
 	color: rgba(255, 255, 255, 0.7);
 	padding: 10px;
 	border-radius: 5px;
+}
+
+.navbar-default .navbar-nav > li > a{
+	border-radius: 0px;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:active,
+.navbar-default .navbar-nav > li > a:focus{
+	background-color: none;
 }
 
 /*THEME END*/
