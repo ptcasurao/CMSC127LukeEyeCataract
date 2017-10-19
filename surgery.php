@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Prototype</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--	<link rel="stylesheet" href="bootstrap.min.css">	-->
-	<link rel="stylesheet" href="./bootstrap.min.css">
-	<!-- 	<script src="jquery.min.js"></script>	-->
-	<script src="./jquery.min.js"></script>
-  	<!--	<script src="bootstrap.min.js"></script>	-->
-  	<script src="./bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="theme2.css">
+
+  <title>Prototype</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="references/bootstrap.min.css">
+  <link rel="stylesheet" href="references/font-awesome.min.css">
+  <script src="references/jquery.min.js"></script>
+  <script src="references/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="theme2.css">
 
 </head>
 
@@ -20,41 +19,10 @@
 <div class="container-fluid" id="outer">
 
 <!-- HEAD AND NAVIGATION -->
-<?php
-  $placeholder = "Luke foundation (placeholder)";
-  $page = array("Doctors", "Patient", "Surgery");
-  $link = array("doctors.php", "patient.php", "surgery.php");
-  $doctor = array("Physicians", "Surgeons");
-  $i = 0;
-?>
-<div>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid" style="padding: 0px;">
-      <div id="banner" style="background-image: url(p_holder.jpg);">
-        <?php echo $placeholder; ?> </div> </div>
-    <div class="container-fluid">
-      <div>
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navi" style="border-color:rgba(255, 255, 255,0.5); background-color:rgba(255, 255, 255,0.7);">
-            <?php for($i=0; $i<count($page);$i++){ ?>
-              <span class="icon-bar"></span>
-            <?php } ?>
-          </button>
-          <a class="navbar-brand" href="Home.php" id="navlink" style="font-size: 12pt; color:#2d4309;"> <span class="glyphicon glyphicon-home"></span> Home </a>
-        </div>
-      <div class="collapse navbar-collapse" id="navi">
-        <ul class="nav navbar-nav" >
-          <?php for ($i=0; $i < count($page); $i++) { echo '<li><a href="'.$link[$i].'" id="navlink" style="color:#4a6a15;">'.$page[$i].'</a></li>'; } ?> </ul>
-      </div>
-
-      </div>
-    </div>
-  </nav>
-</div>
+<?php include("header.php"); ?>
 <!-- HEAD AND NAVIGATION END -->
 
 <!--
-
 TABLE INFORMATION
 	-	Date
 	-	Case_number
@@ -65,7 +33,6 @@ TABLE INFORMATION
 	- Diagnosis
 	-	Location
 	-	Remarks
-
 -->
 
 <?php //CODE SECTION STARTS HERE
@@ -94,17 +61,16 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
 
 <!-- SURGERIES -->
 <div class="container-fluid" id="basic" >
-	<div id="inner">
-		
-	<!-- TITLE -->
-		<div class="container-fluid" >
-			<h4>Eye Cataract Surgeries</h4>
-			<br>
-		</div>
-	<!-- TITLE -->
+  <div id="inner">
+    
+  <!-- TITLE -->
+    <div class="container-fluid" >
+      <h4 style="color:#337ab7;">Eye Cataract Surgeries</h4>
+    </div>
+  <!-- TITLE -->
 
 <!-- CONTENT -->
-		<div class="container-fluid" >
+    <div class="container-fluid" >
       <div>
 
       <!-- MODIFIABLE CODE STARTS HERE -->
@@ -138,7 +104,7 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
           if ($mydatabase->query($S_update) === TRUE) {
             //echo "Record updated successfully";
           } else {
-            // echo '<script> window.location = "doctors.php?profilepage='.$_POST['doctors_update'].'"; </script>';
+            // echo '<script> window.location = "surgery.php?profilepage='.$_POST['surgery_update'].'"; </script>';
             echo '
             <div class="alert alert-danger alert-dismissable">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
@@ -147,17 +113,98 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
         }//RECIEVE UPDATE END
 
       } else {};
-      if (isset($_GET["delete"])) { $delete_p =$_GET["delete"]; $DEFAULT=2; } else {};
+      if (isset($_GET["delete"])) { $delete_p=$_GET["delete"]; $DEFAULT=2; } else {};
 
-      //MYSQL SECTION
       $limit = 20;
       $begin = ($current_p-1)*$limit;
-      $S_query_list = "SELECT * FROM SURGERY s, DOCTOR d where s.SURG_LICENSE_NUM = d.DOC_LICENSE_NUM order by SURG_DATE desc limit $begin";
-      $S_query = $S_query_list.$limit;
-      $output = $mydatabase->query($S_query);
+
+      //FILTER ADD
+      if(isset($_POST["filter_check"])){
+        //var_dump($_POST);
+
+        $F_DD = $F_MM = $F_YY = $F_LN = $F_ID = "";
+        $D = 0;
+
+        if(isset($_POST["FSS"])){
+          $F_SS = $_POST["FSS"];
+        }
+        if(isset($_POST["FDD"])){
+          if($_POST["FDD"]>0){
+            $F_DD = ' AND DAY(s.SURG_DATE)'.$F_SS.trim($_POST["FDD"]);
+            $D = 1;
+          }
+        }
+        if(isset($_POST["FMM"])){
+          if($_POST["FMM"]>0){
+            if($D>0){
+              if($F_SS==">"){
+                $MARGIN = -1;
+              }else if($F_SS=="<"){
+                $MARGIN = 1;
+              }
+            }else{
+              $MARGIN = 0; 
+            }
+            $F_MM = ' AND MONTH(s.SURG_DATE)'.$F_SS.(trim($_POST["FMM"])+$MARGIN);
+            $D = 2;
+          }
+        }
+        if(isset($_POST["FYY"])){
+          if($_POST["FYY"]>0){
+            if($D>0){
+              if($F_SS==">"){
+                $MARGIN = -1;
+              }else if($F_SS=="<"){
+                $MARGIN = 1;
+              }
+            }else{
+              $MARGIN = 0; 
+            }
+            $F_YY = ' AND YEAR(s.SURG_DATE)'.$F_SS.(trim($_POST["FYY"])+$MARGIN);
+          }
+        }
+        if(isset($_POST["FSL"])) {
+          if(strlen($_POST["FSL"])>0){
+            $F_LN = ' AND s.SURG_LICENSE_NUM='.trim($_POST["FSL"]);
+          }
+        }
+        if(isset($_POST["FID"])) {
+          if(strlen($_POST["FID"])>0){
+            $F_ID = ' AND s.PAT_ID_NUM2='.trim($_POST["FID"]);
+          }
+        }
+
+        $filter =  $F_DD.$F_MM.$F_YY.$F_LN.$F_ID;
+
+      } else {
+        $filter = "";
+      }
+      //FILTER ADD END
+
+      //SEARCH
+      if(isset($_GET["search_record"])){
+        $search = "";
+        $key = trim($_GET["search_record"]);
+        if(strlen($key)>0){
+          $search = '';
+        }
+      }else{
+        $search = "";
+      }
+      //SEARCH END
+
+      //MYSQL SECTION
+      $S_query = "SELECT * FROM SURGERY s, DOCTOR d where s.SURG_LICENSE_NUM = d.DOC_LICENSE_NUM $filter $search order by s.SURG_DATE desc limit $begin, ".$limit;
       //MYSQL SECTION END
+
+      $output = $mydatabase->query($S_query);      
         
       if($DEFAULT==0){
+
+        //FILTER
+        include("surgery_filter.php");
+        //FILTER END
+
         if ($output->num_rows > 0) {
 
         //MAIN PAGE
@@ -165,7 +212,7 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
           //HEADER
           echo '<li class="list-group-item" id="tophead">';
           echo '<div class="container-fluid row">';
-          echo '<div class="col-md-2" style="width:150px; float:left;"><b>'.'Date'.'</b></div>';
+          echo '<div class="col-md-2" style="width:150px; float:left;"><b>'.'Date (y-m-d)'.'</b></div>';
           echo '<div class="col-md-2" style="width:180px; float:left;"><b>'.'Case No.'.'</b></div>';
           echo '<div class="col-md-3" style="width:230px; float:left;"><b>'.'Conducted by'.'</b></div>';
           echo '<div class="col-md-3" style="width:200px; float:left;"><b>'.'Clearance No.'.'</b></div>';
@@ -203,7 +250,7 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
           
           if($page_no>1){
             for ($p_no=0; $p_no < $page_no; $p_no++) { 
-              echo '<li><a style="color:#4a6a15;" href="'.'surgery.php'.'?currentpage='.($p_no+1).'">'.($p_no+1).'</a> </li>';
+              echo '<li><a style="color:#337ab7;" href="'.'surgery.php'.'?currentpage='.($p_no+1).'">'.($p_no+1).'</a> </li>';
             }
           } 
 
@@ -243,9 +290,9 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
       //CONTENT
       echo '<div>
         <div class="container-fluid">
-          <h3>Case No.: '.$S_CN.'</h3>
+          <h3>Case No. '.$S_CN.'</h3>
           <div class="panel panel-default" style="padding-bottom:10px;">
-            <div class="panel-heading" style="background-color:#2d4309; color:#ffffff;">Surgery Details</div>
+            <div class="panel-heading" id="tophead1">Surgery Details</div>
             <div class="panel-body row" style="margin:0px; padding:5px 10px;">
               <div class="col-md-3" >'.'Clearance Number'.'</div>
               <div class="col-md-9">'.$S_CLR.'</div>
@@ -303,9 +350,9 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
       //CONTENT END
 
       //BUTTONS AND LINKS
-      echo '<div style="text-align:right;"><a href="'.'patient.php'.'">Back</a></div>';
-      echo '<a role="button" class="btn btn-default"'.'href="'.'surgery.php'.'?delete='.$profile_p.'" style="margin:0px 10px;"> <span class="glyphicon glyphicon-trash"></span> Delete </a>';
-      echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#EditBox" style="margin:0px 10px;"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
+      echo '<a role="button" class="btn btn-default"'.'href="'.'doctors.php'.'?delete='.$profile_p.'" style="margin-left:15px;"> <span class="fa fa-trash" style="font-size:15px;"></span> Delete </a>';
+      echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#EditBox" style="margin-left:10px;"><span class="fa fa-edit" style="font-size:15px;"></span> Edit</button>';
+      echo '<div style="text-align:right;"><button class="btn" id="go" style="margin-right:15px;" onclick="history.back();">Back</button></div>';
       //BUTTONS AND LINKS END
 
       // POP-UP ALERT
@@ -440,9 +487,9 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
     </div>
   <!-- CONTENT END -->
 
-	<?php $mydatabase->close(); ?>
+  <?php $mydatabase->close(); ?>
 
-	</div>
+  </div>
 </div>
 <!-- SURGERIES END -->
 
