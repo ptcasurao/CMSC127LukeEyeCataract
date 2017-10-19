@@ -2,16 +2,14 @@
 <html>
 <head>
 
-	<title>Prototype</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- <link rel="stylesheet" href="bootstrap.min.css">  -->
-  <link rel="stylesheet" href="./bootstrap.min.css">
-  <!--  <script src="jquery.min.js"></script> -->
-  <script src="./jquery.min.js"></script>
-    <!--  <script src="bootstrap.min.js"></script>  -->
-  <script src="./bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="theme2.css">
+  <title>Prototype</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="references/bootstrap.min.css">
+  <link rel="stylesheet" href="references/font-awesome.min.css">
+  <script src="references/jquery.min.js"></script>
+  <script src="references/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="theme2.css">
 
 </head>
 
@@ -21,36 +19,7 @@
 <div class="container-fluid" id="outer">
 
 <!-- HEAD AND NAVIGATION -->
-<?php
-  $placeholder = "Luke foundation (placeholder)";
-  $page = array("Doctors", "Patient", "Surgery");
-  $link = array("doctors.php", "patient.php", "surgery.php");
-  $doctor = array("Physicians", "Surgeons");
-?>
-<div>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid" style="padding: 0px;">
-      <div id="banner" style="background-image: url(p_holder.jpg);">
-        <?php echo $placeholder; ?> </div> </div>
-    <div class="container-fluid">
-      <div>
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navi" style="border-color:rgba(255, 255, 255,0.5); background-color:rgba(255, 255, 255,0.7);">
-            <?php for($i=0; $i<count($page);$i++){ ?>
-              <span class="icon-bar"></span>
-            <?php } ?>
-          </button>
-          <a class="navbar-brand" href="Home.php" id="navlink" style="font-size: 12pt; color:#2d4309;"> <span class="glyphicon glyphicon-home"></span> Home </a>
-        </div>
-      <div class="collapse navbar-collapse" id="navi">
-        <ul class="nav navbar-nav" >
-          <?php for ($i=0; $i < count($page); $i++) { echo '<li><a href="'.$link[$i].'" id="navlink" style="color:#4a6a15;">'.$page[$i].'</a></li>'; } ?> </ul>
-      </div>
-
-      </div>
-    </div>
-  </nav>
-</div>
+<?php include("header.php"); ?>
 <!-- HEAD AND NAVIGATION END -->
 
 <!-- TITLE -->
@@ -59,23 +28,14 @@
   </div>
 <!-- TITLE -->
 
-<!-- PAGE DESCRIPTION -->
-<!--
-  - SUBMISSION: form information will be sent to page "submit.php"
-  - PROGRESS: to be checked for further revision
-  - COMPLETED? not yet but very close
-  - REMARKS:-check on form field limitations/ resizability / field morphing when screen changes... etc.
-            -watch out for form wrapping when screen changes/ adjust max width and min width
-            -stability (to be improved)
- -->
-<!-- PAGE DESCRIPTION END -->
-
 <?php //CODE SECTION START
 
 //PATIENT INFORMATION FIELDS MAX CHAR VALUES
 $ID_LENG = 15;
 $PHYL_LENG = 7;
 $MAX_NAME = 40;
+$FN_MAX = 20;
+$LN_MAX = 20;
 $STAFFL_LENG = 7;
 $VD_MAX = 15;
 $DC_MAX = 30;
@@ -97,33 +57,58 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
       <!-- FORMS -->
         <div class="container-fluid">
           <h3>Patient Information</h3>
-          <hr style=" border: solid 1px #2d4309;  width:100%; padding: 0px;">
+          <hr>
               
           <form method="post" action="submit.php">
 
-          <!-- PATIENT ID -->
+          <!-- PATIENT NAME -->
             <div class="form-group row">
-              <label class="control-label col-md-2" for="PAT_ID" style="float:left; width:170px;">Patient </label>
-			  <div class="col-md-3" style="width: 180px; float: left;">
-                <input type="text" class="form-control" id="PAT_ID" placeholder="Patient ID" maxlength="<?php echo $ID_LENG; ?>" name="PAT_ID" required>
-              </div>
+              <label class="col-md-2" style="float:left; width:170px;">Name</label>
 
-              <div class="col-md-3" style="width: 180px; float: left;">
-                <input type="text" class="form-control" id="PAT_NAME" placeholder="Patient Name" maxlength="<?php echo $MAX_NAME; ?>" name="PAT_ID" required>
+            <div class="col-md-7">
+            <!-- FIRST NAME -->
+              <div style="width: 175px; float: left; margin-right:10px;">
+                <label class="sr-only" for="PF_NAME" required >First Name</label>
+                <input type="text" class="form-control" id="PF_NAME" placeholder="First Name"  maxlength="<?php echo $FN_MAX; ?>" name="PF_NAME" required>
               </div>
+            <!-- FIRST NAME END -->
+
+            <!-- LAST NAME -->
+              <div style="width: 175px; float: left; margin-right:10px;">
+                <label class="sr-only" for="PL_NAME">Last Name</label>
+                <input type="text" class="form-control" id="PL_NAME" placeholder="Last Name"  maxlength="<?php echo $LN_MAX; ?>" name="PL_NAME" required>
+              </div>
+            <!-- LAST NAME END -->
             </div>
 
+            </div>
+          <!-- PATIENT NAME END -->
+
+          <!-- INSERT OTHERS -->
+
+          <!-- PATIENT ID -->
+            <div class="form-group row">
+              <label class="control-label col-md-2" for="PAT_ID" style="float:left; width:170px;">ID Number </label>
+            <div class="col-md-7">
+			       <div style="width: 150px; float: left; margin-right:10px;">
+                <input type="text" class="form-control" id="PAT_ID" placeholder="Patient ID" maxlength="<?php echo $ID_LENG; ?>" name="PAT_ID" required>
+              </div>
+            </div>
+            </div>
           <!-- PATIENT ID END -->
 
+          <div class="well" style="padding-bottom:5px;">
           <!-- PHYSICIAN LICENSE NUMBER -->
             <div class="form-group row">
               <label class="control-label col-md-2" for="PHYS_LIC" style="float:left; width:170px;">Examined by: </label>
-              <div class="col-md-2" style="width: 120px; float: left;">
+              <div class="col-md-7">
+              <div style="width: 120px; float: left; margin-right:10px;">
                 <input pattern="\d{7}" title="License Number ranges from 0000000-9999999." class="form-control" id="PHYS_LIC" placeholder="Phys. Lic." maxlength="<?php echo $PHYL_LENG; ?>" name="PHYS_LIC" required>
               </div>
 
-			  <div class="col-md-2" style="width: 180px; float: left;">
-                <input pattern="\d{7}" title="Physician Name" class="form-control" id="PHYS_LIC" placeholder="Physician Name" maxlength="<?php echo $MAX_NAME; ?>" name="PHYS_LIC" required>
+			        <div style="width: 200px; float: left; margin-right:10px;">
+                <input class="form-control" id="PHYS_NAME" placeholder="Physician Name" maxlength="<?php echo $MAX_NAME; ?>" name="PHYS_NAME">
+              </div>
               </div>
             </div>
           <!-- PHYSICIAN LICENSE NUMBER END -->
@@ -131,14 +116,17 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
           <!-- STAFF LICENSE NUMBER -->
             <div class="form-group row">
               <label class="control-label col-md-2" for="STAFF_LIC" style="float:left; width:170px;">Screened by: </label>
-              <div class="col-md-2" style="width: 120px; float: left;">
+              <div class="col-md-7">
+              <div style="width: 120px; float: left; margin-right:10px;">
                 <input pattern="\d{7}" title="License Number ranges from 0000000-9999999." class="form-control" id="STAFF_LIC" placeholder="Staff Lic." maxlength="<?php echo $STAFFL_LENG; ?>" name="STAFF_LIC" required>
               </div>
-			  <div class="col-md-2" style="width: 180px; float: left;">
-                <input pattern="\d{7}" title="Staff Name" class="form-control" id="STAFF_LIC" placeholder="Staff Name" maxlength="<?php echo $MAX_NAME; ?>" name="STAFF_NAME" required>
+			        <div style="width: 200px; float: left; margin-right:10px;">
+                <input class="form-control" id="STAFF_NAME" placeholder="Staff Name" maxlength="<?php echo $MAX_NAME; ?>" name="STAFF_NAME">
+              </div>
               </div>
             </div>
           <!-- STAFF LICENSE NUMBER END -->
+          </div>
 
           <!-- VISUAL ACUITY -->
             <div class="panel-group" style="margin-top:25px;">

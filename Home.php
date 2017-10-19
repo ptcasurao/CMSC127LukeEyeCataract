@@ -2,16 +2,14 @@
 <html>
 <head>
 
-	<title>Prototype</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- <link rel="stylesheet" href="bootstrap.min.css">  -->
-  <link rel="stylesheet" href="./bootstrap.min.css">
-  <!--  <script src="jquery.min.js"></script> -->
-  <script src="./jquery.min.js"></script>
-    <!--  <script src="bootstrap.min.js"></script>  -->
-  <script src="./bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="theme2.css">
+  <title>Prototype</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="references/bootstrap.min.css">
+  <link rel="stylesheet" href="references/font-awesome.min.css">
+  <script src="references/jquery.min.js"></script>
+  <script src="references/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="theme2.css">
 
 </head>
 
@@ -21,36 +19,7 @@
 <div class="container-fluid" id="outer">
 
 <!-- HEAD AND NAVIGATION -->
-<?php
-  $placeholder = "Luke foundation (placeholder)";
-  $page = array("Doctors", "Patient", "Surgery");
-  $link = array("doctors.php", "patient.php", "surgery.php");
-  $doctor = array("Physicians", "Surgeons");
-?>
-<div>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid" style="padding: 0px;">
-      <div id="banner" style="background-image: url(p_holder.jpg);">
-        <?php echo $placeholder; ?> </div> </div>
-    <div class="container-fluid">
-      <div>
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navi" style="border-color:rgba(255, 255, 255,0.5); background-color:rgba(255, 255, 255,0.7);">
-            <?php for($i=0; $i<count($page);$i++){ ?>
-              <span class="icon-bar"></span>
-            <?php } ?>
-          </button>
-          <a class="navbar-brand" href="Home.php" id="navlink" style="font-size: 12pt; color:#2d4309;"> <span class="glyphicon glyphicon-home"></span> Home </a>
-        </div>
-      <div class="collapse navbar-collapse" id="navi">
-        <ul class="nav navbar-nav" >
-          <?php for ($i=0; $i < count($page); $i++) { echo '<li><a href="'.$link[$i].'" id="navlink" style="color:#4a6a15;">'.$page[$i].'</a></li>'; } ?> </ul>
-      </div>
-
-      </div>
-    </div>
-  </nav>
-</div>
+<?php include("header.php"); ?>
 <!-- HEAD AND NAVIGATION END -->
 
 <!-- TITLE -->
@@ -58,7 +27,6 @@
     <h4>Eye Cataract Program</h4>
   </div>
 <!-- TITLE -->
-
 
 <!-- HOME -->
 <div class="container-fluid" id="basic" style="padding-top: 10px; background-color: rgba(74, 106, 21  ,0);">
@@ -75,7 +43,7 @@
           <div class="row" id="menu">
           <div class="panel-group" style="margin: 0px;">
               <div class="panel panel-default" style="border:0px; border-radius:5px;">
-                <div class="panel-heading" id="panelh" style="color:#f2f2f2; background-color:#4a6a15; margin:0px; padding:10px; border-bottom:3px solid #d5b62a;"> <span class="glyphicon glyphicon-pencil"> </span> FORMS</div>
+                <div class="panel-heading" id="tophead1"> <span class="fa fa-pencil" style="font-size:20px;"> </span> FORMS</div>
                 <div class="panel-body" style="padding:0px;">
 
             <!-- ITEM-->

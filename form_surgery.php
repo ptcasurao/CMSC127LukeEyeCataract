@@ -2,16 +2,14 @@
 <html>
 <head>
 
-	<title>Prototype</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- <link rel="stylesheet" href="bootstrap.min.css">  -->
-  <link rel="stylesheet" href="./bootstrap.min.css">
-  <!--  <script src="jquery.min.js"></script> -->
-  <script src="./jquery.min.js"></script>
-    <!--  <script src="bootstrap.min.js"></script>  -->
-  <script src="./bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="theme2.css">
+  <title>Prototype</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="references/bootstrap.min.css">
+  <link rel="stylesheet" href="references/font-awesome.min.css">
+  <script src="references/jquery.min.js"></script>
+  <script src="references/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="theme2.css">
 
 </head>
 
@@ -21,36 +19,7 @@
 <div class="container-fluid" id="outer">
 
 <!-- HEAD AND NAVIGATION -->
-<?php
-  $placeholder = "Luke foundation (placeholder)";
-  $page = array("Doctors", "Patient", "Surgery");
-  $link = array("doctors.php", "patient.php", "surgery.php");
-  $doctor = array("Physicians", "Surgeons");
-?>
-<div>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid" style="padding: 0px;">
-      <div id="banner" style="background-image: url(p_holder.jpg);">
-        <?php echo $placeholder; ?> </div> </div>
-    <div class="container-fluid">
-      <div>
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navi" style="border-color:rgba(255, 255, 255,0.5); background-color:rgba(255, 255, 255,0.7);">
-            <?php for($i=0; $i<count($page);$i++){ ?>
-              <span class="icon-bar"></span>
-            <?php } ?>
-          </button>
-          <a class="navbar-brand" href="Home.php" id="navlink" style="font-size: 12pt; color:#2d4309;"> <span class="glyphicon glyphicon-home"></span> Home </a>
-        </div>
-      <div class="collapse navbar-collapse" id="navi">
-        <ul class="nav navbar-nav" >
-          <?php for ($i=0; $i < count($page); $i++) { echo '<li><a href="'.$link[$i].'" id="navlink" style="color:#4a6a15;">'.$page[$i].'</a></li>'; } ?> </ul>
-      </div>
-
-      </div>
-    </div>
-  </nav>
-</div>
+<?php include("header.php"); ?>
 <!-- HEAD AND NAVIGATION END -->
 
 <!-- TITLE -->
@@ -58,17 +27,6 @@
     <h4>Eye Cataract Program</h4> <br>
   </div>
 <!-- TITLE -->
-
-<!-- PAGE DESCRIPTION -->
-<!--
-  - SUBMISSION: form information will be sent to page "submit.php"
-  - PROGRESS: to be checked for further revision
-  - COMPLETED? not yet but very close
-  - REMARKS:-check on form field limitations/ resizability / field morphing when screen changes... etc.
-            -watch out for form wrapping when screen changes/ adjust max width and min width
-            -stability (to be improved)
- -->
-<!-- PAGE DESCRIPTION END -->
 
 <?php  //CODE SECTION START
 
@@ -100,7 +58,7 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
       <!-- FORMS -->
         <div class="container-fluid">
           <h3>Surgery Information</h3>
-          <hr style=" border: solid 1px #2d4309;  width:100%; padding: 0px;">
+          <hr>
               
           <form method="post" action="submit.php">
 
@@ -116,13 +74,14 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
           <!-- SURGEON LICENSE NUMBER -->
             <div class="form-group row">
               <label class="control-label col-md-2" for="SURG_LIC" style="float:left; width:170px;">Conducted by: </label>
-              <div class="col-md-2" style="width: 120px; float: left;">
+              <div class="col-md-7">
+              <div style="width: 120px; float: left; margin-right:10px;">
                 <input pattern="\d{7}" title="License Number ranges from 0000000-9999999." class="form-control" id="SURG_LIC" placeholder="Surg. Lic." maxlength="<?php echo $SURG_LENG; ?>" name="SURG_LIC" required>
-				
               </div>
-			  <div class="col-md-2" style="width: 200px; float: left;">
-				<input title="Name" class="form-control" id="SURG_NAME" placeholder="Surgeon Name" maxlength="40" name="SURG_LIC" required>
-			  </div>
+              <div style="width: 200px; float: left; margin-right:10px;">
+      				  <input class="form-control" id="SURG_NAME" placeholder="Surgeon Name" maxlength="40">
+      			  </div>
+              </div>
             </div>
           <!-- SURGEON LICENSE NUMBER END -->
 
@@ -135,12 +94,14 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
                   <!-- PATIENT ID -->
                     <div class="form-group row">
                       <label class="control-label col-md-2" for="PAT_ID" style="float:left; width:170px;">Patient ID </label>
-                      <div class="col-md-3" style="float:left; width:170px;">
+                      <div class="col-md-7">
+                      <div style="float:left; width:170px; margin-right:10px;">
                         <input  class="form-control" id="PAT_ID" placeholder="Enter Patient ID" maxlength="<?php echo $ID_LENG; ?>" name="PAT_ID" required>
                       </div>
-					   <div class="col-md-3" style="width: 180px; float: left;">
-						<input type="text" class="form-control" id="PAT_NAME" placeholder="Patient Name" maxlength="<?php echo $MAX_NAME; ?>" name="PAT_ID" required>
-					  </div>
+					            <div style="width: 180px; float: left; margin-right:10px;">
+						            <input type="text" class="form-control" id="PAT_NAME" placeholder="Patient Name" maxlength="<?php echo $MAX_NAME; ?>" name="PAT_NAME">
+					           </div>
+                     </div>
                     </div>
                   <!-- PATIENT ID END -->
 
@@ -194,25 +155,26 @@ $MONTH_choice = array("January","Febuary","March","April","May","June","July","A
                   <!-- DATE -->
                     <div class="form-group row">
                       <label class="control-label col-md-3" style="float:left; width:200px;">Date of Surgery </label>
-
-                      <div class="col-md-2">
+                    <div class="col-md-7">
+                      <div>
                           <label class="sr-only" for="MM">Month</label>
-                          <select class="form-control"  name="MM" style="width: 120px; float: left;" required>
+                          <select class="form-control"  name="MM" style="width: 120px; float: left; margin-right:10px;" required>
                             <?php for ($j=0; $j < count($MONTH_choice); $j++) { 
                               echo '<option value="'.($j+1).'">'.$MONTH_choice[$j].'</option>';
                              } ?>
                           </select>
                       </div>
 
-                      <div class="col-md-1" style="width: 80px; float: left;">
+                      <div style="width: 80px; float: left; margin-right:10px;">
                           <label class="sr-only" for="DD">Day</label>
                           <input pattern="\d||[0-2]\d|3[0-1]|" title="" class="form-control" placeholder="DD" maxlength="<?php echo $SURG_DATE_DD; ?>" name="DD" required>
                       </div>
 
-                      <div class="col-md-2" style="width: 100px; float: left;">
+                      <div  style="width: 100px; float: left; margin-right:10px;">
                           <label class="sr-only" for="YY">Year</label>
                           <input pattern="[1-2]\d\d\d" title="" class="form-control" placeholder="YYYY" maxlength="<?php echo $SURG_DATE_YY; ?>" name="YY" required>
                       </div>
+                    </div>
 
                     </div>
                   <!-- DATE END -->

@@ -2,16 +2,14 @@
 <html>
 <head>
 
-	<title>Prototype</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- <link rel="stylesheet" href="bootstrap.min.css">  -->
-  <link rel="stylesheet" href="./bootstrap.min.css">
-  <!--  <script src="jquery.min.js"></script> -->
-  <script src="./jquery.min.js"></script>
-    <!--  <script src="bootstrap.min.js"></script>  -->
-  <script src="./bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="theme2.css">
+  <title>Prototype</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="references/bootstrap.min.css">
+  <link rel="stylesheet" href="references/font-awesome.min.css">
+  <script src="references/jquery.min.js"></script>
+  <script src="references/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="theme2.css">
 
 </head>
 
@@ -21,57 +19,8 @@
 <div class="container-fluid" id="outer">
 
 <!-- HEAD AND NAVIGATION -->
-<?php
-  $placeholder = "Luke foundation (placeholder)";
-  $page = array("Doctors", "Patient", "Surgery");
-  $link = array("doctors.php", "patient.php", "surgery.php");
-  $doctor = array("Physicians", "Surgeons");
-  $i = 0;
-?>
-<div>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid" style="padding: 0px;">
-      <div id="banner" style="background-image: url(p_holder.jpg);">
-        <?php echo $placeholder; ?> </div> </div>
-    <div class="container-fluid">
-      <div>
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navi" style="border-color:rgba(255, 255, 255,0.5); background-color:rgba(255, 255, 255,0.7);">
-            <?php for($i=0; $i<count($page);$i++){ ?>
-              <span class="icon-bar"></span>
-            <?php } ?>
-          </button>
-          <a class="navbar-brand" href="Home.php" id="navlink" style="font-size: 12pt; color:#2d4309;"> <span class="glyphicon glyphicon-home"></span> Home </a>
-        </div>
-      <div class="collapse navbar-collapse" id="navi">
-        <ul class="nav navbar-nav" >
-          <?php for ($i=0; $i < count($page); $i++) { echo '<li><a href="'.$link[$i].'" id="navlink" style="color:#4a6a15;">'.$page[$i].'</a></li>'; } ?> </ul>
-      </div>
-
-      </div>
-    </div>
-  </nav>
-</div>
+<?php include("header.php"); ?>
 <!-- HEAD AND NAVIGATION END -->
-
-<!--
-
-PATIENT INFORMATION:
-  - PATIENT ID
-  - STAFF ID
-  - PHYSICIAN LICENSE NUMBER
-
-SECONDARY INFORMATION
-  - Visual Acuity of Left Eye with Spectacles
-  - Visual Acuity of Right Eye with Spectacles
-  - Visual Acuity of Left Eye without Spectacles
-  - Visual Acuity of Right Eye without Spectacles
-  - Visual Disability
-  - Cause of Visual Disability
-  - Affected part of the Left Eye
-  - Affected part of the Right Eye
-
--->
 
 <!-- PATIENTS -->
 <div class="container-fluid" id="basic" >
@@ -79,25 +28,20 @@ SECONDARY INFORMATION
 
   <!-- TITLE -->
     <div class="container-fluid" >
-        <h4>Eye Cataract Patients</h4> <br>
+        <h4 style="color:#337ab7;">Eye Cataract Patients</h4>
     </div>
   <!-- TITLE -->
 
 <?php //CODE SECTION STARTS HERE
 
 //ESTABLISHING MYSQL LINK (1)
-
 include("dbconnect.php");
-
-  //IF CONNECTION FAILED
-if (!$mydatabase) {
-  die( '<div style="color: #ffffff; font-size: 12pt; text-align:center;">'.'Error: Unable to connect to database.'.'</div');
-}//END
-
 //ESTABLISHING MYSQL LINK END (1)
 
 //MAX VALUES
 $ID_LENG = 15;
+$FN_LENG = 20;
+$LN_LENG = 20;
 $PHYL_LENG = 7;
 $STAFFL_LENG = 7;
 $VD_MAX = 15;
@@ -110,7 +54,7 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
 //CODE SECTION ENDS HERE
 ?>
 
-  <!-- CONTENT -->
+<!-- CONTENT -->
     <div class="container-fluid" >
       <div>
 
@@ -129,6 +73,9 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
         //RECEIVE UPDATE
         if(isset($_POST['patients_update'])){
           $P_ID = $_POST["PAT_ID"];
+          $P_PPFN = $_POST["PAT_PPFN"];
+          $P_PPLN = $_POST["PAT_PPLN"];
+          $P_PLN = $_POST["_LIC"];
           $P_LN = $_POST["PHYS_LIC"];
           $P_SLN = $_POST["STAFF_LIC"];
           $P_VASR = '20/'.$_POST["VASR"];     
@@ -141,12 +88,12 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
           $P_LEA = $_POST["LEA"];
           $toupdate = $_POST["patients_update"];
 
-          $P_update = "UPDATE EYEPATIENT SET PAT_ID_NUM = '$P_ID', PHY_LICENSE_NUM = '$P_LN', STAFF_LICENSE_NUM = '$P_SLN', VA_WITH_SPECT_LEFT = '$P_VASL', VA_WITH_SPECT_RIGHT = '$P_VASR', VA_NO_SPECT_LEFT = '$P_VAL', VA_NO_SPECT_RIGHT = '$P_VAR', VISUAL_DISABILITY ='$P_VD', DISABILITY_CAUSE ='$P_DC', RIGHT_EYE_AFFECTED ='$P_REA', LEFT_EYE_AFFECTED ='$P_LEA' WHERE PAT_ID_NUM = '$toupdate' ";
+          $P_update = "UPDATE EYEPATIENT SET PAT_ID_NUM = '$P_ID', PAT_FNAME = '$P_PPFN', PAT_LNAME = '$P_PPLN', PHY_LICENSE_NUM = '$P_LN', STAFF_LICENSE_NUM = '$P_SLN', VA_WITH_SPECT_LEFT = '$P_VASL', VA_WITH_SPECT_RIGHT = '$P_VASR', VA_NO_SPECT_LEFT = '$P_VAL', VA_NO_SPECT_RIGHT = '$P_VAR', VISUAL_DISABILITY ='$P_VD', DISABILITY_CAUSE ='$P_DC', RIGHT_EYE_AFFECTED ='$P_REA', LEFT_EYE_AFFECTED ='$P_LEA' WHERE PAT_ID_NUM = '$toupdate' ";
       
           if ($mydatabase->query($P_update) === TRUE) {
             //echo "Record updated successfully";
           } else {
-            // echo '<script> window.location = "doctors.php?profilepage='.$_POST['doctors_update'].'"; </script>';
+            // echo '<script> window.location = "patient.php?profilepage='.$_POST['patients_update'].'"; </script>';
             echo '
             <div class="alert alert-danger alert-dismissable">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
@@ -157,14 +104,57 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
       } else {};
       if (isset($_GET["delete"])) { $delete_p =$_GET["delete"]; $DEFAULT=2; } else {};
 
-      //MYSQL SECTION
       $limit = 20;
       $begin = ($current_p-1)*$limit;
-      $P_query = "SELECT * FROM EYEPATIENT p, DOCTOR d where p.PHY_LICENSE_NUM = d.DOC_LICENSE_NUM order by PAT_ID_NUM asc limit $begin, ".$limit;
+
+      //FILTER ADD
+      if(isset($_POST["filter_check"])){
+        //var_dump($_POST);
+
+        $F_LN = $F_ID = "";
+        $D = 0;
+
+        if(isset($_POST["FPL"])) {
+          if(strlen($_POST["FPL"])>0){
+            $F_LN = ' AND p.PHY_LICENSE_NUM='.trim($_POST["FPL"]);
+          }
+        }
+        if(isset($_POST["FID"])) {
+          if(strlen($_POST["FID"])>0){
+            $F_ID = ' AND p.PAT_ID_NUM2='.trim($_POST["FID"]);
+          }
+        }
+
+        $filter =  $F_LN.$F_ID;
+
+      } else {
+        $filter = "";
+      }
+      //FILTER ADD END
+
+      //SEARCH
+      if(isset($_GET["search_record"])){
+        $search = "";
+        $key = trim($_GET["search_record"]);
+        if(strlen($key)>0){
+          $search = '';
+        }
+      }else{
+        $search = "";
+      }
+      //SEARCH END
+
+      //MYSQL SECTION
+      $P_query = "SELECT * FROM EYEPATIENT p, DOCTOR d where p.PHY_LICENSE_NUM = d.DOC_LICENSE_NUM $filter $search order by p.PAT_LNAME asc limit $begin, ".$limit;
       $output = $mydatabase->query($P_query);
       //MYSQL SECTION END
 
       if($DEFAULT==0){
+
+        //FILTER
+        include("patient_filter.php");
+        //FILTER END
+
         if ($output->num_rows>0) {
 
       //MAIN PAGE
@@ -172,9 +162,9 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
           //HEADER
           echo '<li class="list-group-item" id="tophead">';
           echo '<div class="container-fluid row">';
+          echo '<div class="col-md-2" style="width:175px; float:left;"><b>'.'Last Name'.'</b></div>';
+          echo '<div class="col-md-2" style="width:175px; float:left;"><b>'.'First Name'.'</b></div>';
           echo '<div class="col-md-3" style="width:200px; float:left;"><b>'.'Patient ID'.'</b></div>';
-          echo '<div class="col-md-3" style="width:200px; float:left;"><b>'.'Visual Disability'.'</b></div>';
-          echo '<div class="col-md-2" style="width:175px; float:left;"><b>'.'Examined by'.'</b></div>';
           echo '<div class="col-md-2" style="width:175px; float:left;"><b>'.'Screened by'.'</b></div>';
           echo '</div>';
           echo '</li>';
@@ -186,10 +176,10 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
             echo '<li class="list-group-item">';
             echo '<div class="row">';
 
+                echo '<div class="col-md-2" style="width:175px; float:left;">'.$dataline["PAT_LNAME"].'</div>';
+                echo '<div class="col-md-2" style="width:175px; float:left;">'.$dataline["PAT_FNAME"].'</div>';
                 echo '<div class="col-md-3" style="width:200px; float:left;">'.$dataline["PAT_ID_NUM"].'</div>';
-                echo '<div class="col-md-3" style="width:200px; float:left;">'.$dataline["VISUAL_DISABILITY"].'</div>';
-                echo '<div class="col-md-2" style="width:175px; float:left;">'.$dataline["LAST_NAME"].' '.$dataline["FIRST_NAME"].'</div>';
-                echo '<div class="col-md-2" style="width:175px; float:left;">'.$dataline["STAFF_LICENSE_NUM"].'</div>';
+                echo '<div class="col-md-2" style="width:175px; float:left;">'.$dataline["FIRST_NAME"].' '.$dataline["LAST_NAME"].'</div>';
                 echo '<div class="col-md-2" style=" float:right;">'.'<a href="'.'patient.php'.'?profilepage='.$dataline["PAT_ID_NUM"].'">'.'see full details'.'</a>'.'</div>';
               
             echo '<div>';
@@ -209,7 +199,7 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
           
       if($page_no>1){
         for ($p_no=0; $p_no < $page_no; $p_no++) { 
-          echo '<li><a style="color:#4a6a15;" href="'.'patient.php'.'?currentpage='.($p_no+1).'">'.($p_no+1).'</a> </li>';
+          echo '<li><a style="color:#337ab7;" href="'.'patient.php'.'?currentpage='.($p_no+1).'">'.($p_no+1).'</a> </li>';
         }
       } 
 
@@ -238,6 +228,8 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
 
       //VALUES
       $P_ID = $dataline["PAT_ID_NUM"];
+      $P_PPFN = $dataline["PAT_FNAME"];
+      $P_PPLN = $dataline["PAT_LNAME"];
       $P_LN = $dataline["PHY_LICENSE_NUM"];
       $P_SLN = $dataline["STAFF_LICENSE_NUM"];
       $P_VD = $dataline["VISUAL_DISABILITY"];
@@ -249,9 +241,13 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
       //CONTENT
       echo '<div>
         <div class="container-fluid">
-          <h3>Patient ID No.: '.$P_ID.'</h3>
+          <h3>Patient ID No. '.$P_ID.'</h3>
           <div class="panel panel-default"  style="padding-bottom:10px;">
-            <div class="panel-heading" style="background-color:#2d4309; color:#ffffff;">Patient Record</div>
+            <div class="panel-heading" id="tophead1">Patient Record</div>
+            <div class="panel-body row" style="margin:0px; padding:5px 10px;">
+              <div class="col-md-3" >'.'Patient '.'</div>
+              <div class="col-md-9">'.$dataline["PAT_FNAME"].' '.$dataline["PAT_LNAME"].'</div>
+            </div>
             <div class="panel-body row" style="margin:0px; padding:5px 10px;">
               <div class="col-md-3" >'.'Examined by: '.'</div>
               <div class="col-md-9">'.$dataline["FIRST_NAME"].' '.$dataline["LAST_NAME"].'</div>
@@ -316,11 +312,11 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
       echo'</div> </div>';
       //CONTENT END
 
-      //LINKS AND BUTTONS
-      echo '<div style="text-align:right;"><a href="'.'patient.php'.'">Back</a></div>';
-      echo '<a role="button" class="btn btn-default"'.'href="'.'patient.php'.'?delete='.$profile_p.'" style="margin:0px 10px;"> <span class="glyphicon glyphicon-trash"></span> Delete </a>';
-      echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#EditBox" style="margin:0px 10px;"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
-      //LINKS AND BUTTONS END
+      //BUTTONS AND LINKS
+      echo '<a role="button" class="btn btn-default"'.'href="'.'doctors.php'.'?delete='.$profile_p.'" style="margin-left:15px;"> <span class="fa fa-trash" style="font-size:15px;"></span> Delete </a>';
+      echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#EditBox" style="margin-left:10px;"><span class="fa fa-edit" style="font-size:15px;"></span> Edit</button>';
+      echo '<div style="text-align:right;"><button class="btn" id="go" style="margin-right:15px;" onclick="history.back();">Back</button></div>';
+      //BUTTONS AND LINKS END
 
       // POP-UP ALERT
       echo '<div class="modal fade" id="EditBox" role="dialog" style="">
@@ -339,10 +335,17 @@ $VA_choice = array(10, 12.5, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200)
         //EDIT FORM
         echo '<div class="container-fluid">
           <form method="post" id="updating" action="#">
-
           <div class="container-fluid" style="margin-bottom: 10px;">
             <label for="PAT_ID" style="width: '.$leftmargin.'px; float: left; ">Patient ID No. </label>
             <input type="text" class="form-control" id="PAT_ID" maxlength="'.$ID_LENG.'" name="PAT_ID" value="'.$P_ID.'" style="width: 150px; float: left;" required >
+          </div>
+          <div class="container-fluid" style="margin-bottom: 10px;">
+            <label for="PAT_PPFN" style="width: '.$leftmargin.'px; float: left; "> First Name </label>
+            <input type="text" class="form-control" id="PAT_PPFN" maxlength="'.$FN_LENG.'" name="PAT_PPFN" value="'.$P_PPFN.'" style="width: 150px; float: left;" required>
+          </div>
+          <div class="container-fluid" style="margin-bottom: 10px;">
+            <label for="PAT_PPLN" style="width: '.$leftmargin.'px; float: left; "> Last Name </label>
+            <input type="text" class="form-control" id="PAT_PPLN" maxlength="'.$LN_LENG.'" name="PAT_PPLN" value="'.$P_PPLN.'" style="width: 150px; float: left;" required>
           </div>
           <div class="container-fluid" style="margin-bottom: 10px;">
             <label for="PHYS_LIC" style="float:left; width:'.$leftmargin.'px;">Physician License No. </label>

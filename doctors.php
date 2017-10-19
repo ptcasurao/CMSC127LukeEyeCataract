@@ -2,16 +2,14 @@
 <html>
 <head>
 
-	<title>Prototype</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- <link rel="stylesheet" href="bootstrap.min.css">  -->
-  <link rel="stylesheet" href="./bootstrap.min.css">
-  <!--  <script src="jquery.min.js"></script> -->
-  <script src="./jquery.min.js"></script>
-    <!--  <script src="bootstrap.min.js"></script>  -->
-  <script src="./bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="theme2.css">
+  <title>Prototype</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="references/bootstrap.min.css">
+  <link rel="stylesheet" href="references/font-awesome.min.css">
+  <script src="references/jquery.min.js"></script>
+  <script src="references/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="theme2.css">
 
 </head>
 
@@ -21,41 +19,11 @@
 <div class="container-fluid" id="outer">
 
 <!-- HEAD AND NAVIGATION -->
-<?php
-  $placeholder = "Luke foundation (placeholder)";
-  $page = array("Doctors", "Patient", "Surgery");
-  $link = array("doctors.php", "patient.php", "surgery.php");
-  $doctor = array("Physicians", "Surgeons");
-  $i = 0;
-?>
-<div>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid" style="padding: 0px;">
-      <div id="banner" style="background-image: url(p_holder.jpg);">
-        <?php echo $placeholder; ?> </div> </div>
-    <div class="container-fluid">
-      <div>
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navi" style="border-color:rgba(255, 255, 255,0.5); background-color:rgba(255, 255, 255,0.7);">
-            <?php for($i=0; $i<count($page);$i++){ ?>
-              <span class="icon-bar"></span>
-            <?php } ?>
-          </button>
-          <a class="navbar-brand" href="Home.php" id="navlink" style="font-size: 12pt; color:#2d4309;"> <span class="glyphicon glyphicon-home"></span> Home </a>
-        </div>
-      <div class="collapse navbar-collapse" id="navi">
-        <ul class="nav navbar-nav" >
-          <?php for ($i=0; $i < count($page); $i++) { echo '<li><a href="'.$link[$i].'" id="navlink" style="color:#4a6a15;">'.$page[$i].'</a></li>'; } ?> </ul>
-      </div>
 
-      </div>
-    </div>
-  </nav>
-</div>
 <!-- HEAD AND NAVIGATION END -->
+<?php include("header.php"); ?>
 
 <!--
-
 DOCTOR BASIC INFORMATION:
   - FIRST NAME
   - LAST NAME
@@ -64,20 +32,12 @@ DOCTOR BASIC INFORMATION:
 
 DOCTOR SECONDARY INFORMATION
   - ...
-
 -->
 
 <?php //CODE SECTION STARTS HERE
 
 //ESTABLISHING MYSQL LINK (1)
-
 include("dbconnect.php");
-
-  //IF CONNECTION FAILED
-if (!$mydatabase) {
-  die( '<div style="color: #ffffff; font-size: 12pt; text-align:center;">'.'Error: Unable to connect to database.'.'</div');
-}//END
-
 //ESTABLISHING MYSQL LINK END (1)
 
 //MAX VALUES
@@ -95,13 +55,13 @@ $ADDR_MAX = 50;
   <div id="inner" >
 
   <!-- TITLE -->
-		<div class="container-fluid" >
-  			<h4>Doctors</h4> <br>
-		</div>
+    <div class="container-fluid" >
+        <h4 style="color:#337ab7;">Doctors</h4>
+    </div>
   <!-- TITLE -->
 
   <!-- CONTENT -->
-		<div class="container-fluid" >
+    <div class="container-fluid" >
       <div>
 
       <!-- MODIFIABLE CODE STARTS HERE -->
@@ -189,7 +149,7 @@ $ADDR_MAX = 50;
 
         if($page_no>1){
           for ($p_no=0; $p_no < $page_no; $p_no++) { 
-            echo '<li><a style="color:#4a6a15;" href="'.'doctors.php'.'?currentpage='.($p_no+1).'">'.($p_no+1).'</a> </li>';
+            echo '<li><a style="color:#337ab7;" href="'.'doctors.php'.'?currentpage='.($p_no+1).'">'.($p_no+1).'</a> </li>';
           }
         } 
 
@@ -222,11 +182,11 @@ $ADDR_MAX = 50;
       //CONTENT
       echo '<div>
         <div class="container-fluid">
-          <h3>Dr. '.$D_LN.' '.$D_FN.'</h3>
+          <h3>Dr. '.$D_FN.' '.$D_LN.'</h3>
           <div class="panel panel-default" style="padding-bottom:10px;">
-            <div class="panel-heading" style="background-color:#2d4309; color:#ffffff;">Doctor Information</div>
+            <div class="panel-heading" id="tophead1">Doctor Information</div>
             <div class="panel-body row" style="margin:0px; padding:5px 10px;">
-              <div class="col-md-3" >'.'License No.'.'</div>
+              <div class="col-md-3" >'.'License Number'.'</div>
               <div class="col-md-9">'.$D_DLN.'</div>
             </div>
             <div class="panel-body row" style="margin:0px; padding:5px 10px;">
@@ -239,9 +199,9 @@ $ADDR_MAX = 50;
       //CONTENT END
 
       //BUTTONS AND LINKS
-      echo '<div style="text-align:right;"><a href="'.'doctors.php'.'">Back</a></div>';
-      echo '<a role="button" class="btn btn-default"'.'href="'.'doctors.php'.'?delete='.$profile_p.'" style="margin:0px 10px;"> <span class="glyphicon glyphicon-trash"></span> Delete </a>';
-      echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#EditBox" style="margin:0px 10px;"><span class="glyphicon glyphicon-edit"></span> Edit</button>';
+      echo '<a role="button" class="btn btn-default"'.'href="'.'doctors.php'.'?delete='.$profile_p.'" style="margin-left:15px;"> <span class="fa fa-trash" style="font-size:15px;"></span> Delete </a>';
+      echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#EditBox" style="margin-left:10px;"><span class="fa fa-edit" style="font-size:15px;"></span> Edit</button>';
+      echo '<div style="text-align:right;"><button class="btn" id="go" style="margin-right:15px;" onclick="history.back();">Back</button></div>';
       //BUTTONS AND LINKS END
 
       // POP-UP ALERT
@@ -261,19 +221,19 @@ $ADDR_MAX = 50;
           <form method="post" id="updating" action="#" >
 
           <div class="container-fluid" style="margin-bottom: 10px;">
-            <label for="F_NAME" style="width: 175px; float: left; ">First Name: </label>
+            <label for="F_NAME" style="width: 175px; float: left; ">First Name </label>
             <input type="text" class="form-control" id="F_NAME" maxlength="'.$FN_MAX.'" name="F_NAME" value="'.$D_FN.'" style="width: 150px; float: left;" required >
           </div>
           <div class="container-fluid" style="margin-bottom: 10px;">
-            <label for="L_NAME" style="width: 175px; float: left; ">Last Name: </label>
+            <label for="L_NAME" style="width: 175px; float: left; ">Last Name </label>
             <input type="text" class="form-control" id="L_NAME" maxlength="'.$LN_MAX.'" name="L_NAME" value="'.$D_LN.'" style="width: 150px; float: left;" required >
           </div>
           <div class="container-fluid" style="margin-bottom: 10px;">
-            <label for="LICENSE_NUM" style="width: 175px; float: left; ">License No.: </label>
+            <label for="LICENSE_NUM" style="width: 175px; float: left; ">License No. </label>
             <input pattern="\d{7}" title="License Number ranges from 0000000-9999999." type="text" class="form-control" id="LICENSE_NUM" maxlength="'.$LIC_LENG.'" name="LICENSE_NUM" value="'.$D_DLN.'" style="width: 90px; float: left;" required >
           </div>
           <div class="container-fluid" style="margin-bottom: 10px;">
-            <label for="ADDRESS" style="width: 175px; float: left; ">Address: </label>
+            <label for="ADDRESS" style="width: 175px; float: left; ">Address </label>
             <input type="text" class="form-control" id="ADDRESS" maxlength="'.$ADDR_MAX.'" name="ADDRESS" value="'.$D_A.'" style="max-width: 450px; float: left;">
           </div>
           <div class="text-center" style="margin-top: 20px;">
